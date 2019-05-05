@@ -1,0 +1,7 @@
+
+
+namespace itertools{
+  class zip{
+
+  };
+};
