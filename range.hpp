@@ -2,42 +2,39 @@
 
 #include <iterator>
 #include<iostream>
-#include<vector>
+#include<list>
 #include<string>
+
+
 
 using namespace std;
 
 namespace itertools{
 
   template <class T>
-  class range{
+  class range : public list<T>{
 
-  typedef typename vector<T>::iterator iterator;
+  typedef typename ::list<T>::iterator iterator;
 
-  private:
-    vector<T> list;
   public:
 
     range(T a,T b){
       // include a and without b
+      list<T>();
       for (auto i = a; i < b; i++) {
-        list.push_back(i);
+        list<T>::push_back(i);
       }
     }
-    range(string str){
-      for (size_t i = 0; i < str.length(); i++) {
-        list.push_back(str[i]);
-      }
-    }
-    vector<T> get(){
-      return list;
+
+    list<T> get(){
+      return list<T>::get();
     }
 
     iterator begin() {
-      return list.begin();
+      return list<T>::begin();
     }
     iterator end() {
-      return list.end();
+      return list<T>::end();
      }
 
 
