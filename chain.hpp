@@ -10,13 +10,14 @@ using namespace std;
 
 namespace itertools{
 
-  template <class T>
+  template <typename T>
   class chain : public list<T>{
 
-  typedef typename list<T>::iterator iterator;
+  typedef typename ::list<T>::iterator iterator;
 
   public:
-    chain(T r1,T r2){
+
+    chain(list<T> r1,list<T> r2){
       for(auto i : r1){
         list<T>::push_back(i);
       }
@@ -24,6 +25,33 @@ namespace itertools{
         list<T>::push_back(i);
       }
     }
+
+    // private case for string
+    chain(list<T> r,string s){
+      for(auto i : r){
+        list<T>::push_back(i);
+      }
+      for(auto i : s){
+        list<T>::push_back(i);
+      }
+    }
+    chain(string s,list<T> r){
+      for(auto i : s){
+        list<T>::push_back(i);
+      }
+      for(auto i : r){
+        list<T>::push_back(i);
+      }
+    }
+    chain(string s1,string s2){
+      for(auto i : s1){
+        list<T>::push_back(i);
+      }
+      for(auto i : s2){
+        list<T>::push_back(i);
+      }
+    }
+    // end string case
 
     iterator begin() {
       return list<T>::begin();

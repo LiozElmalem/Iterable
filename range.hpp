@@ -5,7 +5,7 @@
 #include<list>
 #include<string>
 
-
+#include <assert.h>
 
 using namespace std;
 
@@ -19,15 +19,17 @@ namespace itertools{
   public:
 
     range(T a,T b){
+      assert(b >= a);
       // include a and without b
-      list<T>();
       for (auto i = a; i < b; i++) {
         list<T>::push_back(i);
       }
     }
 
-    list<T> get(){
-      return list<T>::get();
+    range(string str){
+      for(char i : str){
+        list<T>::push_back(i);
+      }
     }
 
     iterator begin() {
