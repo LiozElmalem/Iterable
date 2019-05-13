@@ -35,11 +35,7 @@ namespace itertools{
         //   // range<char> temp(s);
         //   // chain(temp,r);
         }
-        // zip(string s1,string s2){
-        //   // range<char> temp1(s1);
-        //   // range<char> temp2(s2);
-        //   // chain(temp1,temp2);
-        // }
+      
 
         iterator begin() {
           return list<T>::begin();

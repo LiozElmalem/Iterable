@@ -2,8 +2,6 @@
 
 #include <iterator>
 #include<iostream>
-#include<list>
-#include<string>
 
 #include <assert.h>
 
@@ -12,34 +10,57 @@ using namespace std;
 namespace itertools{
 
   template <class T>
-  class range : public list<T>{
+  class range{
 
-  typedef typename ::list<T>::iterator iterator;
+  T A; // start point
+  T B; // end point
 
   public:
 
     range(T a,T b){
       assert(b >= a);
       // include a and without b
-      for (auto i = a; i < b; i++) {
-        list<T>::push_back(i);
-      }
+      A = a;
+      B = b;
     }
 
-    range(string str){
-      for(char i : str){
-        list<T>::push_back(i);
-      }
+    class iterator{
+    public :
+
+    T value;
+
+    iterator(T val) : value(val){}
+
+    iterator& operator++()
+    {
+        ++value;
+        return *this;
     }
 
-    iterator begin() {
-      return list<T>::begin();
-    }
-    iterator end() {
-      return list<T>::end();
+    bool operator== (const iterator& temp)
+    {
+       return value == temp.value;
+
+     }
+    bool operator!= (const iterator& temp)
+    {
+       return value != temp.value;
+
+     }
+    T& operator*()
+    {
+       return value;
      }
 
+    };
 
+
+    iterator begin() {
+      return iterator(A);
+    }
+    iterator end() {
+      return iterator(B);
+     }
 
   };
 };

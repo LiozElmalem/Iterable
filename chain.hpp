@@ -60,6 +60,14 @@ namespace itertools{
       return list<T>::end();
      }
 
+     // to string for tests
+     string toString(){
+       string s = "";
+       for(auto i : *this)
+       s += to_string(i) + " ";
+       return s;
+     }
+     //
 
   };
 };
