@@ -2,72 +2,75 @@
 
 #include <iterator>
 #include<iostream>
-#include<string>
-#include <list>
-
 
 using namespace std;
 
 namespace itertools{
 
-  template <typename T>
-  class chain : public list<T>{
+  template <typename T1,typename T2>
+  class chain{
 
-  typedef typename ::list<T>::iterator iterator;
+  T1 A1; // iterator for first type
+  T2 A2; // iterator for second type
 
   public:
 
-    chain(list<T> r1,list<T> r2){
-      for(auto i : r1){
-        list<T>::push_back(i);
-      }
-      for(auto i : r2){
-        list<T>::push_back(i);
-      }
+    chain(T1 a,T2 b) : A1(a),A2(b){}
+
+
+    template<typename E1,typename E2>
+    class iterator{
+    public :
+
+    E1 A; // first iterator
+    E2 B; // second iterator
+
+    int position; // 0 for the first range and 1 for the second
+
+    iterator(E1 val1,E2 val2) : A(val1),B(val2),position(0){}
+
+    iterator& operator++() // advaced value
+    {
+        if(position == 0)
+          ++A;
+        else
+          ++B;
+        return *this;
     }
 
-    // private case for string
-    chain(list<T> r,string s){
-      for(auto i : r){
-        list<T>::push_back(i);
-      }
-      for(auto i : s){
-        list<T>::push_back(i);
-      }
+     decltype(*A) operator*() const
+     {
+             if(position == 0)
+                 return *A;
+             else
+                 return *B;
     }
-    chain(string s,list<T> r){
-      for(auto i : s){
-        list<T>::push_back(i);
-      }
-      for(auto i : r){
-        list<T>::push_back(i);
-      }
-    }
-    chain(string s1,string s2){
-      for(auto i : s1){
-        list<T>::push_back(i);
-      }
-      for(auto i : s2){
-        list<T>::push_back(i);
-      }
-    }
-    // end string case
 
-    iterator begin() {
-      return list<T>::begin();
-    }
-    iterator end() {
-      return list<T>::end();
+    bool operator!= (const iterator& temp)
+    {
+      if (position == 0 && !(A != (temp.A))) // continue to the next range
+           position = 1;
+      if(position == 0)
+      return A != temp.A;
+      else
+      return B != temp.B;
      }
+    //  auto & operator*()
+    // {
+    //    if(position == 0)
+    //    return *A;
+    //    if(position == 1)
+    //    return *B;
+    //  }
 
-     // to string for tests
-     string toString(){
-       string s = "";
-       for(auto i : *this)
-       s += to_string(i) + " ";
-       return s;
-     }
-     //
+    };
+
+    auto begin() {
+       return iterator<decltype(A1.begin()),decltype(A2.begin())>(A1.begin(), A2.begin()); // iteratable object
+    }
+    auto end() {
+       return iterator<decltype(A1.end()),decltype(A2.end())>(A1.end(), A2.end()); // iteratable object
+    }
 
   };
 };

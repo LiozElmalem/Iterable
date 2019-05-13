@@ -1,49 +1,64 @@
 #include <iostream>
-#include <list>
+#include <utility>
+
+using namespace std;
 
 namespace itertools{
-  template<typename T>
-  class zip : public list<T>{
 
-      typedef typename list<T>::iterator iterator;
+    // print the pair
+    template<typename R1,typename R2>
+    ostream & operator<<(ostream &os, const pair<R1,R2> & pair){
+    os << pair.first << ',' << pair.second;
+    return os;
+    }
+    //
+
+  template<class T1,class T2>
+
+  class zip{
+
+      T1 A1;
+      T2 A2;
 
       public:
 
-        zip(list<T> r1,list<T> r2){
-          // pair<T,T> temp;
-          // for(auto i = r1.begin(),j = r2.begin() ; i != r1.end(),j != r2.end() ; ++i,++j){
-          //   temp(i,j);
-          //   list<T>::push_back(temp);
-          // }
-        }
+        zip(T1 a,T2 b) : A1(a),A2(b){}
 
-        zip(list<T> r,string s){
-          // pair<T,char> temp;
-          // for(auto i = r.begin(),j = s.begin() ; i != r.end(),j != s.end() ; ++i,++j){
-          //   temp(i,j);
-          //   list<T>::push_back(temp);
-          // }
-        }
-        zip(string s,list<T> r){
-        //   pair<T2,char> temp;
-        //   for(auto i = r.begin(),j = s.begin() ; i != r.end(),j != s.end() ; ++i,++j){
-        //     temp(i,j);
-        //     pairs.push_back(temp);
-        //   }
-        }
-        zip(string s1,string s2){
-        //   // range<char> temp(s);
-        //   // chain(temp,r);
-        }
-      
+        template<typename E1,typename E2>
+        class iterator{
 
-        iterator begin() {
-          return list<T>::begin();
+        public:
+
+          E1 A;
+          E2 B;
+
+          iterator(E1 v1,E2 v2) : A(v1),B(v2){}
+
+          pair <decltype(*A),decltype(*B)> operator*() const
+          {
+           return pair< decltype(*A),decltype(*B)> (*A,*B);
+          }
+
+          iterator& operator++() // advaced value
+          {
+                ++A;
+                ++B;
+              return *this;
+          }
+
+          bool operator!= (const iterator& temp)
+          {
+            return (A != temp.A) && (B != temp.B);
+           }
+
+        };
+
+        auto begin() {
+          return iterator <decltype(A1.begin()),decltype(A2.begin())>(A1.begin(), A2.begin());
         }
-        iterator end() {
-          return list<T>::end();
+        auto end() {
+          return iterator <decltype(A1.end()),decltype(A2.end())>(A1.end(), A2.end());
          }
-
 
   };
 };

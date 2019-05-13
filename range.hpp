@@ -3,8 +3,6 @@
 #include <iterator>
 #include<iostream>
 
-#include <assert.h>
-
 using namespace std;
 
 namespace itertools{
@@ -17,37 +15,32 @@ namespace itertools{
 
   public:
 
-    range(T a,T b){
-      assert(b >= a);
-      // include a and without b
-      A = a;
-      B = b;
-    }
+    range(T a,T b) : A(a),B(b){}
 
     class iterator{
     public :
 
-    T value;
+    T value; // "now" value
 
     iterator(T val) : value(val){}
 
-    iterator& operator++()
+    iterator& operator++() // advaced value
     {
         ++value;
         return *this;
     }
 
-    bool operator== (const iterator& temp)
+    bool operator== (range::iterator const & temp) const
     {
        return value == temp.value;
 
      }
-    bool operator!= (const iterator& temp)
+    bool operator!= (range::iterator const & temp) const
     {
        return value != temp.value;
 
      }
-    T& operator*()
+    T operator*() const
     {
        return value;
      }
@@ -55,10 +48,10 @@ namespace itertools{
     };
 
 
-    iterator begin() {
+    auto begin() const{
       return iterator(A);
     }
-    iterator end() {
+    auto end() const{
       return iterator(B);
      }
 
