@@ -28,21 +28,19 @@ namespace itertools{
 
               iterator(E1 v1,E2 v2) : A(v1),B(v2),C(v2){}
 
-              pair <decltype(*A),decltype(*B)> operator*() const
+              auto operator*() const
               {
                return std::pair< decltype(*A),decltype(*B)> (*A,*B);
               }
 
-              iterator& operator++() // advaced value
-              {
-                  //   ++A;
-                  //   ++B;
-                  // return *this;
+              iterator& operator++() { // advaced value
+                ++B;
+                return *this;
               }
 
               bool operator!= (const iterator& temp)
               {
-                // return (A != temp.A) && (B != temp.B);
+                return (A != temp.A) && (B != temp.B);
                }
 
             };

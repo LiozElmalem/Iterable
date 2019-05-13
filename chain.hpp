@@ -38,7 +38,7 @@ namespace itertools{
         return *this;
     }
 
-     decltype(*A) operator*() const
+     auto operator*() const
      {
              if(position == 0)
                  return *A;

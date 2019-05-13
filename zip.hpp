@@ -34,7 +34,7 @@ namespace itertools{
 
           iterator(E1 v1,E2 v2) : A(v1),B(v2){}
 
-          pair <decltype(*A),decltype(*B)> operator*() const
+          auto operator*() const
           {
            return pair< decltype(*A),decltype(*B)> (*A,*B);
           }
