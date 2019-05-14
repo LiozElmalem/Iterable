@@ -55,14 +55,7 @@ namespace itertools{
       else
       return B != temp.B;
      }
-    //  auto & operator*()
-    // {
-    //    if(position == 0)
-    //    return *A;
-    //    if(position == 1)
-    //    return *B;
-    //  }
-
+  
     };
 
     auto begin() {

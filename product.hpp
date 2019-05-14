@@ -1,11 +1,16 @@
 #pragma once
 
 #include <utility>
-#include <iostream>
+
+// print the pair
+// taken from zip.hpp and present the same idea
+
+
 
 using namespace std;
 
 namespace itertools{
+
   template<typename T1,typename T2>
   class product{
 
@@ -21,34 +26,50 @@ namespace itertools{
 
             public:
 
-              E1 A;
-              E2 B;
+              E1 begin_A; // start first
 
-              E2 C; // for b loops
+              E2 begin_B; // start second
 
-              iterator(E1 v1,E2 v2) : A(v1),B(v2),C(v2){}
+              E2 temp_begin_B; // back to start with b temp
+
+              bool ready_for_next_round; // sign the position
+
+
+              iterator(E1 v1,E2 v2) : begin_A(v1),begin_B(v2),temp_begin_B(v2),ready_for_next_round(false){}
 
               auto operator*() const
               {
-               return std::pair< decltype(*A),decltype(*B)> (*A,*B);
+               return pair <decltype(*begin_A),decltype(*begin_B)> (*begin_A,*begin_B);
               }
 
               iterator& operator++() { // advaced value
-                ++B;
-                return *this;
+              ++begin_B;
+              return *this;
               }
 
-              bool operator!= (const iterator& temp)
+              bool next_round(){
+                return ready_for_next_round;
+              }
+
+              bool operator!= (iterator const & temp)
               {
-                return (A != temp.A) && (B != temp.B);
-               }
+                if ((begin_A != temp.begin_A) && !(begin_B != temp.begin_B)){
+                    ready_for_next_round = true;
+                  }
+                if(ready_for_next_round){
+                  begin_B = temp_begin_B;
+                  ++begin_A;
+                  ready_for_next_round = false;
+                }
+                return (begin_A != temp.begin_A);
+              }
 
             };
 
-            auto begin() {
+            auto begin() const {
               return iterator <decltype(A1.begin()),decltype(A2.begin())>(A1.begin(), A2.begin());
              }
-            auto end() {
+            auto end() const {
               return iterator <decltype(A1.end()),decltype(A2.end())>(A1.end(), A2.end());
              }
 

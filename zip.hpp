@@ -7,9 +7,9 @@ namespace itertools{
 
     // print the pair
     template<typename R1,typename R2>
-    ostream & operator<<(ostream &os, const pair<R1,R2> & pair){
-    os << pair.first << ',' << pair.second;
-    return os;
+    ostream & operator << (ostream & output, const pair<R1,R2> & pair){
+    output << pair.first << ',' << pair.second;
+    return output;
     }
     //
 

@@ -8,7 +8,7 @@ namespace itertools{
 
 // print vecotr(present a subset)
   template <typename V>
-  ostream &operator<<(ostream &os, const vector<V> &S){
+  ostream & operator << (ostream &os, const vector<V> &S){
     os << "{";
     auto it = S.begin();
     if(it != S.end())
