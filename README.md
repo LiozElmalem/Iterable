@@ -10,27 +10,27 @@ This project represent iterable class like itertools in python : https://docs.py
 
 We build 5 containers:
 
-### range :
+### Range :
 
 Used as a more readable equivalent to the traditional for loop operating over a range of values, such as all elements in a container.
 
-### chain :
+### Chain :
 
-represent combining between 2 containers (include string).
+Represent combining between 2 containers (include string).
 
-### zip :
+### Zip :
 
-represent parallel connection between 2 containers.
+Represent parallel connection between 2 containers.
 
-### product : 
+### Product : 
 
-represent Cartesian product between 2 containers.
+Represent Cartesian product between 2 containers.
 
-### powerset :
+### Powerset :
 
-represent all the sub-groups of container.
+Represent all the sub-groups of container.
 
-### what is iterable?
+### What is iterable?
 
-allows an object to be the target of the "foreach" statement.
+Allows an object to be the target of the "foreach" statement.
 
