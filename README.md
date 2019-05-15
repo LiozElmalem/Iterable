@@ -1,6 +1,6 @@
 # Iterable
 
-This project represent iterable class.
+This project represent iterable class like itertools in python : https://docs.python.org/2/library/itertools.html.
 
 ### The tasks written by:
 
