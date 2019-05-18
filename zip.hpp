@@ -13,16 +13,16 @@ namespace itertools{
     }
     //
 
-  template<class T1,class T2>
+  template<class CONTAINER_1,class CONTAINER_2>
 
   class zip{
 
-      T1 A1;
-      T2 A2;
+      CONTAINER_1 A1;
+      CONTAINER_2 A2;
 
       public:
 
-        zip(T1 a,T2 b) : A1(a),A2(b){}
+        zip(CONTAINER_1 a,CONTAINER_2 b) : A1(a),A2(b){}
 
         template<typename E1,typename E2>
         class iterator{

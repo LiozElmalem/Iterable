@@ -6,79 +6,88 @@ namespace itertools{
 
 
 
-// print vecotr(present a subset)
-  template <typename V>
-  ostream & operator << (ostream &os, const vector<V> &S){
-    os << "{";
-    auto it = S.begin();
-    if(it != S.end())
-    { // first element is without comma seperator.
-        os << *it;
-        ++it;
-    }
-    while (it != S.end()){
-        os << ',' << *it;
-        ++it;
-    }
-    os << "}";
-    return os;
+// print vecotr(present a subvector)
+  template <typename Object>
+  ostream & operator << (ostream & output, const vector<Object> & input){
+    output << "{";
+    auto it = input.begin();
+    if(it != input.end()) { // first element is without comma seperator.
+        output << *it;
+        ++it;}
+    while (it != input.end()){
+        output << ',' << *it;
+        ++it;}
+    output << "}";
+    return output;
 }
-//
+//////////////////////////////////////////////////
 
 
 
-  template<typename T>
+  template<typename CONTAINER>
   class powerset{
 
-    T A;
+    CONTAINER A; // one exactly container
 
   public:
 
-    powerset(T a) : A(a){}
+    powerset(CONTAINER temp) : A(temp){}
 
-    template<typename K>
+
+    template<typename OBJECT>
     class iterator{
 
+      private :
+
+      ////////// calculate the size of the range /////////
+      size_t group_size(OBJECT start_temp,OBJECT final_temp){
+        OBJECT runner = start_temp;
+        size_t ans = 0;
+        while(runner != final_temp){
+          ans++;
+          ++runner;
+        }
+        return ans;
+      }
+      //////////***************************//////////
+
+
       public :
-      K start;
-      K end;
-      unsigned int index;
 
-      iterator(K val1,K val2) : start(val1),end(val2){}
+      OBJECT start;
+      OBJECT final;
 
-      // <decltype(*A),decltype(*B)>
+      OBJECT runner;
+
+      iterator(OBJECT start_temp,OBJECT final_temp) : start(start_temp),final(final_temp),runner(start_temp){}
+
       auto operator*() const{
-        K runner = start;
-           vector<typename remove_const<typename remove_reference<decltype(*start)>::type>::type> S;
-
-           unsigned int i = index;
-           while (i != 0 && runner != end)
-           { // convert to binary, each '1' digit is an index of an element.
-               unsigned int r = i % 2;
-               i = i >> 1; //divide by 2.
-
-               if (r == 1)
-                   S.emplace_back(*runner);
-
-               ++runner;
-           }
-
-           return S;
+        vector<typename remove_const<typename remove_reference<decltype(*start)>::type>::type> vector; // every call to this operator function the vector is absoulutly new
+        if(runner == start)
+          vector = {};
+        else{
+          OBJECT temp = start;
+          while(temp != runner){
+            vector.emplace_back(* temp);
+            ++temp;
+          }
+        }
+        return vector;
       }
 
-      iterator& operator++() { // advaced value
-        ++end;
+      auto operator++() { // advaced value
+        ++runner;
         return *this;
       }
 
-      bool operator!= (const iterator& temp){
-        return (start != temp.start) && (end != temp.end);
+      bool operator!= (const iterator & temp){
+        return (runner != temp.runner);
       }
 
     };
 
-    auto begin() {return iterator<decltype(A.begin())>(A.begin(), A.end());}
-    auto end() {return iterator<decltype(A.begin())>(A.end(), A.end());}
+    auto begin() const{return iterator<decltype(A.begin())>(A.begin(), A.end());}
+    auto end() const{return iterator<decltype(A.begin())>(A.end(), A.end());}
 
   };
 };

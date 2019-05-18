@@ -11,15 +11,15 @@ using namespace std;
 
 namespace itertools{
 
-  template<typename T1,typename T2>
+  template<typename CONTAINER_1,typename CONTAINER_2>
   class product{
 
-          T1 A1;
-          T2 A2;
+          CONTAINER_1 A1;
+          CONTAINER_2 A2;
 
           public:
 
-            product(T1 a,T2 b) : A1(a),A2(b){}
+            product(CONTAINER_1 a,CONTAINER_2 b) : A1(a),A2(b){}
 
             template<typename E1,typename E2>
             class iterator{

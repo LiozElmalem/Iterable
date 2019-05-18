@@ -7,15 +7,15 @@ using namespace std;
 
 namespace itertools{
 
-  template <typename T1,typename T2>
+  template <typename CONTAINER_1,typename CONTAINER_2>
   class chain{
 
-  T1 A1; // iterator for first type
-  T2 A2; // iterator for second type
+  CONTAINER_1 A1; // iterator for first type
+  CONTAINER_2 A2; // iterator for second type
 
   public:
 
-    chain(T1 a,T2 b) : A1(a),A2(b){}
+    chain(CONTAINER_1 a,CONTAINER_2 b) : A1(a),A2(b){}
 
 
     template<typename E1,typename E2>
@@ -55,7 +55,7 @@ namespace itertools{
       else
       return B != temp.B;
      }
-  
+
     };
 
     auto begin() {
