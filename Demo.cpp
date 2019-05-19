@@ -53,8 +53,8 @@ int main() {
 	cout << endl << endl << "Power-set of range of ints " << endl;
 	for (auto subset: powerset(range(1,4)))
 		cout << subset;  // {}{1}{2}{1,2}{3}{1,3}{2,3}{1,2,3}
-	// cout << endl << endl << "Power-set of chain " << endl;
-	// for (auto subset: powerset(chain(range('a','c'),range('x','z'))))
-	// 	cout << subset;  // {}{a}{b}{a,b}{x}{a,x}{b,x}{a,b,x}{y}{a,y}{b,y}{a,b,y}{x,y}{a,x,y}{b,x,y}{a,b,x,y}
+	cout << endl << endl << "Power-set of chain " << endl;
+	for (auto subset: powerset(chain(range('a','c'),range('x','z'))))
+		cout << subset;  // {}{a}{b}{a,b}{x}{a,x}{b,x}{a,b,x}{y}{a,y}{b,y}{a,b,y}{x,y}{a,x,y}{b,x,y}{a,b,x,y}
 	return 0;
 }

@@ -1,14 +1,13 @@
-#include<vector>
+#include<vector> // dinamic array
+#include<cmath> // for pow(x,n)
 
 using namespace std;
 
 namespace itertools{
 
-
-
 // print vecotr(present a subvector)
-  template <typename Object>
-  ostream & operator << (ostream & output, const vector<Object> & input){
+  template <typename OBJECT>
+  ostream & operator << (ostream & output, const vector<OBJECT> & input){
     output << "{";
     auto it = input.begin();
     if(it != input.end()) { // first element is without comma seperator.
@@ -20,8 +19,7 @@ namespace itertools{
     output << "}";
     return output;
 }
-//////////////////////////////////////////////////
-
+////////*****************//////////
 
 
   template<typename CONTAINER>
@@ -39,49 +37,70 @@ namespace itertools{
 
       private :
 
-      ////////// calculate the size of the range /////////
-      size_t group_size(OBJECT start_temp,OBJECT final_temp){
-        OBJECT runner = start_temp;
-        size_t ans = 0;
-        while(runner != final_temp){
-          ans++;
+      vector<vector<OBJECT>>  getAllSubsets(const vector<OBJECT> & set){
+        vector<vector<OBJECT>> subset;
+          vector<OBJECT> empty;
+          subset.push_back( empty );
+          for (int i = 0; i < set.size(); i++){
+              vector<vector<OBJECT>> subsetTemp = subset;
+              for (int j = 0; j < subsetTemp.size(); j++)
+                  subsetTemp[j].push_back( set[i] );
+              for (int j = 0; j < subsetTemp.size(); j++)
+                  subset.push_back( subsetTemp[j] );
+          }
+          return subset;
+      }
+
+      vector<OBJECT> change(const OBJECT i,const OBJECT j){
+        vector<OBJECT> ans;
+        OBJECT runner = i;
+        while(runner != j){
+          ans.push_back(runner);
           ++runner;
         }
         return ans;
       }
-      //////////***************************//////////
 
+      size_t length(const OBJECT start,const OBJECT final){
+        OBJECT runner = start;
+        size_t ans = 0;
+        while(runner != final){
+          ans++;
+          ++runner;
+        }
+        return pow(2,ans);
+      }
 
       public :
 
       OBJECT start;
       OBJECT final;
 
-      OBJECT runner;
+      uint index;
 
-      iterator(OBJECT start_temp,OBJECT final_temp) : start(start_temp),final(final_temp),runner(start_temp){}
+      size_t size;
 
-      auto operator*() const{
+      vector<vector<OBJECT>> list;
+
+      iterator(OBJECT start_temp,OBJECT final_temp) : start(start_temp),final(final_temp),size(length(start_temp,final_temp)),index(0){}
+
+      auto operator*(){
+        vector<OBJECT> v = change(start,final);
+        list = getAllSubsets(v);
         vector<typename remove_const<typename remove_reference<decltype(*start)>::type>::type> vector; // every call to this operator function the vector is absoulutly new
-        if(runner == start)
-          vector = {};
-        else{
-          OBJECT temp = start;
-          while(temp != runner){
-            vector.emplace_back(* temp);
-            ++temp;
-          }
+        for(auto i : list[index]){
+        vector.push_back(*i);
         }
         return vector;
       }
 
       auto operator++() { // advaced value
-        ++runner;
+        ++index;
         return *this;
       }
 
       bool operator!= (const iterator & temp){
-        return (runner != temp.runner);
+        return (index != size);
       }
 
     };
