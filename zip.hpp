@@ -53,10 +53,10 @@ namespace itertools{
 
         };
 
-        auto begin() {
+        auto begin() const{
           return iterator <decltype(A1.begin()),decltype(A2.begin())>(A1.begin(), A2.begin());
         }
-        auto end() {
+        auto end() const{
           return iterator <decltype(A1.end()),decltype(A2.end())>(A1.end(), A2.end());
          }
 
