@@ -1,6 +1,7 @@
 #pragma once
 
 #include <utility>
+#include <assert.h>
 
 // print the pair
 // taken from zip.hpp and present the same idea
@@ -11,6 +12,10 @@ using namespace std;
 
 namespace itertools{
 
+
+  bool flag = false; // variable that pointing on the B iterator length
+
+
   template<typename CONTAINER_1,typename CONTAINER_2>
   class product{
 
@@ -19,7 +24,11 @@ namespace itertools{
 
           public:
 
-            product(CONTAINER_1 a,CONTAINER_2 b) : A1(a),A2(b){}
+            product(CONTAINER_1 a,CONTAINER_2 b) : A1(a),A2(b) {
+              flag = false;
+              if(!(b.begin() != b.end())) // private check for b iterator
+              flag = true;
+            }
 
             template<typename E1,typename E2>
             class iterator{
@@ -39,16 +48,13 @@ namespace itertools{
 
               auto operator*() const
               {
-               return pair <decltype(*begin_A),decltype(*begin_B)> (*begin_A,*begin_B);
+               return pair<decltype(*begin_A),decltype(*begin_B)> (*begin_A,*begin_B);
               }
 
               iterator& operator++() { // advaced value
+              if(!ready_for_next_round)
               ++begin_B;
               return *this;
-              }
-
-              bool next_round(){
-                return ready_for_next_round;
               }
 
               bool operator!= (iterator const & temp)
@@ -61,16 +67,16 @@ namespace itertools{
                   ++begin_A;
                   ready_for_next_round = false;
                 }
-                return (begin_A != temp.begin_A);
+                return (begin_A != temp.begin_A && !flag); // check flag --
               }
 
             };
 
             auto begin() const {
-              return iterator <decltype(A1.begin()),decltype(A2.begin())>(A1.begin(), A2.begin());
+              return iterator<decltype(A1.begin()),decltype(A2.begin())>(A1.begin(), A2.begin());
              }
             auto end() const {
-              return iterator <decltype(A1.end()),decltype(A2.end())>(A1.end(), A2.end());
+              return iterator<decltype(A1.end()),decltype(A2.end())>(A1.end(), A2.end());
              }
 
 

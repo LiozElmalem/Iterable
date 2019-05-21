@@ -15,7 +15,10 @@ namespace itertools{
 
   public:
 
-    range(T a,T b) : A(a),B(b){}
+    range(T a,T b) {
+      A = a;
+      B = b;
+    }
 
     class iterator{
     public :
